@@ -1,90 +1,89 @@
 import random
-def main():
+def get_words():
     with open('words.txt') as file:
         text = file.read()
         all_words = text.split()
-    incorrect_guesses = []
-    correct_guesses = []
+    return all_words
+    
+   
+def start_game():
     easy_mode = []
     normal_mode = []
     hard_mode = []
-    guesses = []
-    
+    all_words = get_words()
     for word in all_words:
         if len(word) >= 4 and len(word) <= 6:
             easy_mode.append(word)
         elif len(word) > 6 and len(word) <=8:
             normal_mode.append(word) 
         elif len(word) > 8:
-            hard_mode.append(word)   
+            hard_mode.append(word) 
+    permission = input('Would you like to guess a word, press y for yes and n for no:')
+    if permission  == 'y':
+        guess_difficulty = input('Press e for Easy mode, n for normal mode, or h for hard mode:').lower()
+        if guess_difficulty == 'e':
+            print("Great! Welcome to easy mode")
+            word = random.choice(easy_mode)
+            print(word)
+            
+        if guess_difficulty == 'n':
+            print("Great! You've entered normal mode")
+            word = random.choice(normal_mode)
+            print(word)
+        if guess_difficulty == 'h':
+            print("Awesome! Prepare for hard mode")
+            word = random.choice(hard_mode)
+            print(word)
+    else: 
+        print('See you next time')
 
-    def start_game():
-        permission = input('Would you like to guess a word, press y for yes and n for no:')
-        if permission  == 'y':
-            guess_difficulty = input('Press e for Easy mode, n for normal mode, or h for hard mode:').lower()
-            if guess_difficulty == 'e':
-                print("Great! Welcome to easy mode")
-                word = random.choice(easy_mode)
-                print(word)
-            if guess_difficulty == 'n':
-                print("Great! You've entered normal mode")
-                word = random.choice(normal_mode)
-                print(word)
-            if guess_difficulty == 'h':
-                print("Awesome! Prepare for hard mode")
-                word = random.choice(hard_mode)
-                print(word)
-        else: 
-            print('See you next time')
-
-        display = ['_'] * len(word)  
-        print(' '.join(display)) 
-        user_input = input('Guess a letter: ')
-        for letter in word:
-            if letter in guesses:
-                display.append(letter)
-
-    start_game()
+    display = ['_'] * len(word)  
+    print(' '.join(display)) 
+    play_game(word, display)      
     
-    # def display_letters(word,guesses): 
+     
+
+
+def play_game(word, display):    
+    user_input = input('Guess a letter: ')
+    start = 0
+    incorrect_guesses = []
+    while len(incorrect_guesses) <= 8:
+
+        if word.find(user_input, start) == -1:
+            incorrect_guesses.append(user_input)
+            print(incorrect_guesses)
+        else:
+
+            while word.find(user_input, start) != -1:
+                index = word.index(user_input,start)
+                start = index + 1 
+                display[index] = user_input
+            print(' '.join(display))
+            breakpoint()
+            # return display
+            break
+            
+
+  
+
+start_game()
    
-    #     display =[]
-    #     
-    #         else:
-    #             display.append('_')
-    #     return display   
+
+    # keep_playing = true
+    # while len(incorrect_guesses) <= 8:
 
 
-   
+
+
+           
+
+
         
-        
-
-# while len(guesses) <= 8:
-#         
-#         guesses.append(user_input)
-#         display = display_letters(word,guesses)  
-#         print(display)
-
-
     
-
-   
-    
-
-        
-# def display_underscores():
-#     random_word = display_random_word()       
-#     print('_ '* len(random_word)) 
-#     print(random_word)
+     
 
 
-# start_game()
 
-# word = display_random_word()
-# print(word)
-main()
-
-# difficulty()
-# display_underscores()
 
 
