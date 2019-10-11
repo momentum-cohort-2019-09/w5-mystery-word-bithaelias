@@ -1,3 +1,4 @@
+
 import random
 def get_words():
     with open('words.txt') as file:
@@ -24,21 +25,28 @@ def start_game():
         if guess_difficulty == 'e':
             print("Great! Welcome to easy mode")
             word = random.choice(easy_mode).lower()
+            print('You get 8 guesses')
             print(word)
             
         if guess_difficulty == 'n':
             print("Great! You've entered normal mode")
             word = random.choice(normal_mode).lower()
+            print('You get 8 guesses')
+            print(word)
            
         if guess_difficulty == 'h':
             print("Awesome! Prepare for hard mode")
             word = random.choice(hard_mode).lower()
+            print('You get 8 guesses')
             print(word)
     else: 
         print('See you next time')
+        return
 
-    display = ['_'] * len(word)  
-    print(' '.join(display)) 
+    display = ['_'] * len(word)
+      
+    print(' '.join(display))
+    print('This is your Board') 
     play_game(word, display)      
     
      
@@ -46,10 +54,11 @@ def start_game():
 
 def play_game(word, display):    
     
-    start = 0
+    
     incorrect_guesses = []
     you_won = False
     while len(incorrect_guesses) <= 7 and you_won == False:
+        start = 0
         user_input = input('Guess a letter: ')
         if word.find(user_input, start) == -1:
             incorrect_guesses.append(user_input)
@@ -57,7 +66,9 @@ def play_game(word, display):
                 print(f'You lose!!! The word was {word}')
                 return
             print(incorrect_guesses)
+            print('These are your wrong guesses')
             print(' '.join(display))
+            print('This is your Board')
         else:
 
             while word.find(user_input, start) != -1:
@@ -69,15 +80,16 @@ def play_game(word, display):
                 print(f'You won, the word was {word}!!!')
                 return
             if incorrect_guesses != []:
-                print(incorrect_guesses)   
+                print(incorrect_guesses)
+                print('These are your wrong guesses')   
             print(' '.join(display))
+            print('This is your Board')
             
        
 start_game()
    
 
-    # keep_playing = true
-    # while len(incorrect_guesses) <= 8:
+  
 
 
 
