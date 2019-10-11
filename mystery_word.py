@@ -23,16 +23,16 @@ def start_game():
         guess_difficulty = input('Press e for Easy mode, n for normal mode, or h for hard mode:').lower()
         if guess_difficulty == 'e':
             print("Great! Welcome to easy mode")
-            word = random.choice(easy_mode)
+            word = random.choice(easy_mode).lower()
             print(word)
             
         if guess_difficulty == 'n':
             print("Great! You've entered normal mode")
-            word = random.choice(normal_mode)
-            print(word)
+            word = random.choice(normal_mode).lower()
+           
         if guess_difficulty == 'h':
             print("Awesome! Prepare for hard mode")
-            word = random.choice(hard_mode)
+            word = random.choice(hard_mode).lower()
             print(word)
     else: 
         print('See you next time')
@@ -45,28 +45,34 @@ def start_game():
 
 
 def play_game(word, display):    
-    user_input = input('Guess a letter: ')
+    
     start = 0
     incorrect_guesses = []
-    while len(incorrect_guesses) <= 8:
-
+    you_won = False
+    while len(incorrect_guesses) <= 7 and you_won == False:
+        user_input = input('Guess a letter: ')
         if word.find(user_input, start) == -1:
             incorrect_guesses.append(user_input)
+            if len(incorrect_guesses) == 8:
+                print(f'You lose!!! The word was {word}')
+                return
             print(incorrect_guesses)
+            print(' '.join(display))
         else:
 
             while word.find(user_input, start) != -1:
                 index = word.index(user_input,start)
                 start = index + 1 
                 display[index] = user_input
+            if '_' not in display:
+                you_won = True
+                print(f'You won, the word was {word}!!!')
+                return
+            if incorrect_guesses != []:
+                print(incorrect_guesses)   
             print(' '.join(display))
-            breakpoint()
-            # return display
-            break
             
-
-  
-
+       
 start_game()
    
 
